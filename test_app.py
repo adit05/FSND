@@ -104,7 +104,6 @@ class ActorsMoviesTestCase(unittest.TestCase):
                                         json=self.new_actor)
         insert_data = json.loads(insert_res.data)
         actor_id = insert_data['created_id']
-        print(actor_id)
 
         res = self.client().patch(f'/actors/{actor_id}', headers={"Authorization": "Bearer {}".format(cd_token)},
                                   json={
@@ -116,6 +115,22 @@ class ActorsMoviesTestCase(unittest.TestCase):
         self.assertEqual(res.status_code, 200)
         self.assertEqual(data['success'], True)
         self.assertTrue(data['actor'])
+
+    def test_cd_patch_to_movies(self):
+        insert_res = self.client().post('/movies', headers={"Authorization": "Bearer {}".format(ep_token)},
+                                        json=self.new_movie)
+        insert_data = json.loads(insert_res.data)
+        movie_id = insert_data['created_id']
+
+        res = self.client().patch(f'/movies/{movie_id}', headers={"Authorization": "Bearer {}".format(cd_token)},
+                                  json={
+                                      "title": "The MATRIX"
+                                  })
+        data = json.loads(res.data)
+
+        self.assertEqual(res.status_code, 200)
+        self.assertEqual(data['success'], True)
+        self.assertTrue(data['movie'])
 
     def test_cd_post_to_movies_unauthorized(self):
         res = self.client().post('/movies', headers={"Authorization": "Bearer {}".format(cd_token)},
