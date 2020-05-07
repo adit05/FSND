@@ -193,6 +193,7 @@ class ActorsMoviesTestCase(unittest.TestCase):
         self.assertEqual(res.status_code, 404)
         self.assertEqual(data['success'], False)
 
+
 # Make the tests conveniently executable
 if __name__ == "__main__":
     unittest.main()
