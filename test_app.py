@@ -140,6 +140,14 @@ class ActorsMoviesTestCase(unittest.TestCase):
         self.assertEqual(res.status_code, 401)
         self.assertEqual(data['success'], False)
 
+    def test_cd_delete_to_movies_unauthorized(self):
+        res = self.client().delete('/movies/1', headers={"Authorization": "Bearer {}".format(cd_token)},
+                                   json=self.new_movie)
+        data = json.loads(res.data)
+
+        self.assertEqual(res.status_code, 401)
+        self.assertEqual(data['success'], False)
+
     def test_ep_post_to_movies(self):
         res = self.client().post('/movies', headers={"Authorization": "Bearer {}".format(ep_token)},
                                  json=self.new_movie)
