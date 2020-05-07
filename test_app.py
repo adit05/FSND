@@ -6,7 +6,8 @@ from app import create_app
 from models import setup_db, Actor, Movie
 
 ca_token = 'eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6IkE2UU1saTh3UWp1a2ZaWjhzbHpmdiJ9.eyJpc3MiOiJodHRwczovLzNkeS5hdXRoMC5jb20vIiwic3ViIjoiSlc3WDVOb29FYVNHQWxkaXpINEYxNFNSM2dQOEZlaW5AY2xpZW50cyIsImF1ZCI6Im1vdmllcyIsImlhdCI6MTU4ODc3Njc3NiwiZXhwIjoxNTg4ODYzMTc2LCJhenAiOiJKVzdYNU5vb0VhU0dBbGRpekg0RjE0U1IzZ1A4RmVpbiIsInNjb3BlIjoicmVhZDphY3RvcnMgcmVhZDptb3ZpZXMiLCJndHkiOiJjbGllbnQtY3JlZGVudGlhbHMiLCJwZXJtaXNzaW9ucyI6WyJyZWFkOmFjdG9ycyIsInJlYWQ6bW92aWVzIl19.BIL_5W9Q90y8BMkZOtRg13i8ojgeq0_vn4UjJfdQ7vIzZ64atJVofK1B8mU6ABZjYsVvIqDdJLbLtI4P3NQKba4rRzfCoEfkrn7ZvnOdtO1xgs43o0_E7ZdCP-Bkq5xbANCfQlU___HhbZPlZ6RsOqXGVh7qZTvESusY95kVYsNayrXstoEjm4dwpJtwaC6PVVGtB80UWetzs0UYKuDaV0VTMew9L-DQqwBOv0R7bWalzhiqEDQbfphYSgdfBJQS9Oc_Ht79KqLnzTN9byDbUeAeJLXnxFi76cLbJ92zAbU6fc5D0jP3GkI8dip1dDoTHJVhs8EazYmyhVn8oOa_2w'
-
+cd_token = 'eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6IkE2UU1saTh3UWp1a2ZaWjhzbHpmdiJ9.eyJpc3MiOiJodHRwczovLzNkeS5hdXRoMC5jb20vIiwic3ViIjoiSlc3WDVOb29FYVNHQWxkaXpINEYxNFNSM2dQOEZlaW5AY2xpZW50cyIsImF1ZCI6Im1vdmllcyIsImlhdCI6MTU4ODgxMjEwMCwiZXhwIjoxNTg4ODk4NTAwLCJhenAiOiJKVzdYNU5vb0VhU0dBbGRpekg0RjE0U1IzZ1A4RmVpbiIsInNjb3BlIjoicmVhZDphY3RvcnMgcmVhZDptb3ZpZXMgcG9zdDphY3RvcnMgZGVsZXRlOm1vdmllcyBwYXRjaDphY3RvcnMgcGF0Y2g6bW92aWVzIiwiZ3R5IjoiY2xpZW50LWNyZWRlbnRpYWxzIiwicGVybWlzc2lvbnMiOlsicmVhZDphY3RvcnMiLCJyZWFkOm1vdmllcyIsInBvc3Q6YWN0b3JzIiwiZGVsZXRlOm1vdmllcyIsInBhdGNoOmFjdG9ycyIsInBhdGNoOm1vdmllcyJdfQ.SEbInhnaP1fl2VDVLo_ELYV3T5SxZ7kFWicXhEpZ0JrnfqVS85UESheK2AUQpz8nbG-sXXKnENrjWFmFmNCeRf_TjnbmrHzpG3AcA7X6v6ijfqbOqa0FGYXIxZnGlZJ2q7cEXCf_zp8m40T2AhK2s8ZaWzfL4D_E6-Kred-H24lE6hgCD3cIF6yduBrKIc4ksDbv4rt3CFWaCm_vYu-HS3nqCslNvcEqXsTt0oXw_YEfnDlan5svnY7jBJ4NHGxisr2dHwLnEeLLSDCEWgLaCKQik-wZfppTGRtnnh-pT5WdVrv7gdC5AuBdkPXbp4PNPtv2d4oz591tRCtnWyqPHg'
+ep_token = 'eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6IkE2UU1saTh3UWp1a2ZaWjhzbHpmdiJ9.eyJpc3MiOiJodHRwczovLzNkeS5hdXRoMC5jb20vIiwic3ViIjoiSlc3WDVOb29FYVNHQWxkaXpINEYxNFNSM2dQOEZlaW5AY2xpZW50cyIsImF1ZCI6Im1vdmllcyIsImlhdCI6MTU4ODgxMjE2MywiZXhwIjoxNTg4ODk4NTYzLCJhenAiOiJKVzdYNU5vb0VhU0dBbGRpekg0RjE0U1IzZ1A4RmVpbiIsInNjb3BlIjoicmVhZDphY3RvcnMgcmVhZDptb3ZpZXMgcG9zdDptb3ZpZXMgcG9zdDphY3RvcnMgZGVsZXRlOm1vdmllcyBkZWxldGU6YWN0b3JzIHBhdGNoOmFjdG9ycyBwYXRjaDptb3ZpZXMiLCJndHkiOiJjbGllbnQtY3JlZGVudGlhbHMiLCJwZXJtaXNzaW9ucyI6WyJyZWFkOmFjdG9ycyIsInJlYWQ6bW92aWVzIiwicG9zdDptb3ZpZXMiLCJwb3N0OmFjdG9ycyIsImRlbGV0ZTptb3ZpZXMiLCJkZWxldGU6YWN0b3JzIiwicGF0Y2g6YWN0b3JzIiwicGF0Y2g6bW92aWVzIl19.Co8Wu6qFHTPfiBoYh4F6WcUx_GZadiWKE7h4VD2OF58K_2BRmYSb9q79ntSci0gzirCk1Up14g94UOgEAZYa7eha7WV6FdaEyH7hGel2gL7_xNeXA-ztfLTzVEo4T0XFnJLwGHnhT9qPBVZ5WH4kmneh5zUSS-T9xzRZmd2wIZJhqwb4uuRnVv69cgXAJLjUlLH6S3OHqhosxbRYf4jxhGq0FzBhYwcZDJ5cF0J1N9Fs1yK0-ObT_HSsl51sL4DgjaeRRw3TjRJwetGR9i3Q-R_57PqjNw30jUZSta8IZIhupbnpTB2LQNBTHZ5uBJjm4NRzXt4nDy9uUQhYqgnKEw'
 
 class ActorsMoviesTestCase(unittest.TestCase):
     """This class represents the trivia test case"""
@@ -47,8 +48,8 @@ class ActorsMoviesTestCase(unittest.TestCase):
 
         self.assertEqual(res.status_code, 200)
         self.assertEqual(data['success'], True)
-        #self.assertEqual(data['actor_list'], [])
-        #self.assertTrue(data['number_of_actors'])
+        # self.assertEqual(data['actor_list'], [])
+        # self.assertTrue(data['number_of_actors'])
 
     def test_get_movies(self):
         res = self.client().get('/movies', headers={"Authorization": "Bearer {}".format(ca_token)})
@@ -59,14 +60,51 @@ class ActorsMoviesTestCase(unittest.TestCase):
         #self.assertTrue(['movie_list'])
         #self.assertTrue(data['number_of_movies'])
 
-    def ca_post_to_actors(self):
+    def test_ca_post_to_actors_unauthorized(self):
         res = self.client().post('/actors', headers={"Authorization": "Bearer {}".format(ca_token)})
         data = json.loads(res.data)
 
         self.assertEqual(res.status_code, 401)
         self.assertEqual(data['success'], False)
 
+    def test_ca_post_to_movies_unauthorized(self):
+        res = self.client().post('/movies', headers={"Authorization": "Bearer {}".format(ca_token)})
+        data = json.loads(res.data)
 
+        self.assertEqual(res.status_code, 401)
+        self.assertEqual(data['success'], False)
+
+    def test_cd_post_to_actors(self):
+        res = self.client().post('/actors', headers={"Authorization": "Bearer {}".format(cd_token)}, json=self.new_actor)
+        data = json.loads(res.data)
+
+        self.assertEqual(res.status_code, 200)
+        self.assertEqual(data['success'], True)
+        self.assertTrue(data['actor_list'])
+        self.assertTrue(data['created_id'])
+        self.assertTrue(data['number_of_actors'])
+
+    def test_cd_delete_to_actors(self):
+        insert_res = self.client().post('/actors', headers={"Authorization": "Bearer {}".format(cd_token)}, json=self.new_actor)
+        insert_data = json.loads(insert_res.data)
+        actor_id = insert_data['created_id']
+
+        res = self.client().delete(f'/actors/{actor_id}', headers={"Authorization": "Bearer {}".format(cd_token)})
+        data = json.loads(res.data)
+
+        self.assertEqual(res.status_code, 200)
+        self.assertEqual(data['success'], True)
+        self.assertTrue(data['number_of_actors'])
+
+    def test_cd_post_to_movies_unauthorized(self):
+        res = self.client().post('/movies', headers={"Authorization": "Bearer {}".format(cd_token)}, json=self.new_movie)
+        data = json.loads(res.data)
+
+        self.assertEqual(res.status_code, 200)
+        self.assertEqual(data['success'], True)
+        self.assertTrue(data['movie_list'])
+        self.assertTrue(data['created_id'])
+        self.assertTrue(data['number_of_movies'])
 
 # Make the tests conveniently executable
 if __name__ == "__main__":
