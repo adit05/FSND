@@ -186,6 +186,12 @@ class ActorsMoviesTestCase(unittest.TestCase):
         self.assertEqual(data['success'], True)
         self.assertTrue(data['number_of_movies'])
 
+    def test_ep_delete_to_no_movies(self):
+        res = self.client().delete(f'/movies/1000', headers={"Authorization": "Bearer {}".format(ep_token)})
+        data = json.loads(res.data)
+
+        self.assertEqual(res.status_code, 404)
+        self.assertEqual(data['success'], False)
 
 # Make the tests conveniently executable
 if __name__ == "__main__":
