@@ -61,6 +61,8 @@ class ActorsMoviesTestCase(unittest.TestCase):
         # self.assertTrue(data['movie_list'])
         self.assertTrue(data['number_of_movies'])
 
+    # Casting Assistant unauthorized attempt to post to actors
+
     def test_ca_post_to_actors_unauthorized(self):
         res = self.client().post('/actors', headers={"Authorization": "Bearer {}".format(ca_token)})
         data = json.loads(res.data)
@@ -68,12 +70,16 @@ class ActorsMoviesTestCase(unittest.TestCase):
         self.assertEqual(res.status_code, 401)
         self.assertEqual(data['success'], False)
 
+    # Casting Assistant unauthorized attempt to post to movies
+
     def test_ca_post_to_movies_unauthorized(self):
         res = self.client().post('/movies', headers={"Authorization": "Bearer {}".format(ca_token)})
         data = json.loads(res.data)
 
         self.assertEqual(res.status_code, 401)
         self.assertEqual(data['success'], False)
+
+    # Casting Director
 
     def test_cd_post_to_actors(self):
         res = self.client().post('/actors', headers={"Authorization": "Bearer {}".format(cd_token)},
@@ -85,6 +91,13 @@ class ActorsMoviesTestCase(unittest.TestCase):
         self.assertTrue(data['actor_list'])
         self.assertTrue(data['created_id'])
         self.assertTrue(data['number_of_actors'])
+
+    def test_cd_delete_to_no_actors(self):
+        res = self.client().delete(f'/actors/1000', headers={"Authorization": "Bearer {}".format(cd_token)})
+        data = json.loads(res.data)
+
+        self.assertEqual(res.status_code, 404)
+        self.assertEqual(data['success'], False)
 
     def test_cd_delete_to_actors(self):
         insert_res = self.client().post('/actors', headers={"Authorization": "Bearer {}".format(cd_token)},
